@@ -1,8 +1,9 @@
 require 'gmail_contacts/version'
 
 module GmailContacts
+  VERSION = "0.0.1"
 
-  Identifier = 'GmailContacts v' + VERSION::STRING
+  Identifier = 'GmailContacts v' + VERSION
 
   # An object that represents a single contact
   class Contact
