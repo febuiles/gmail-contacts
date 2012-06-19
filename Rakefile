@@ -15,7 +15,8 @@ def name
 end
 
 def version
-  GmailContacts::VERSION
+ line = File.read("lib/#{name}.rb")[/^\s*VERSION\s*=\s*.*/]
+  line.match(/.*VERSION\s*=\s*['"](.*)['"]/)[1]
 end
 
 def date
