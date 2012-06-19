@@ -1,8 +1,6 @@
-$LOAD_PATH << "."
 require 'rubygems'
 require 'rake'
 require 'date'
-require "gmail_contacts"
 
 #############################################################################
 #
