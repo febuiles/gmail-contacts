@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   ## better to set the email to an email list or something. If you don't have
   ## a custom homepage, consider using your GitHub URL or the like.
   s.authors  = ["Federico Builes"]
-  s.email    = 'federico@mheroin.com'
+  s.email    = 'federico.builes@gmail.com'
   s.homepage = 'https://github.com/febuiles/gmail-contacts'
 
   ## This gets added to the $LOAD_PATH so that 'lib/NAME.rb' can be required as
