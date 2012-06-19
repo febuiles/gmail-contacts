@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.files = %w[
     README.md
     Rakefile
-    gmail_contacts.gemspec
+    gmail-contacts.gemspec
     lib/gmail-contacts.rb
     lib/gmail-contacts/google.rb
   ]
