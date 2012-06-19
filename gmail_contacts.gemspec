@@ -43,6 +43,8 @@ Gem::Specification.new do |s|
   # = MANIFEST =
   s.files = %w[
     README.md
+    Rakefile
+    gmail_contacts.gemspec
     lib/gmail_contacts.rb
     lib/gmail_contacts/google.rb
   ]
