@@ -1,4 +1,4 @@
-module Contacts
+module GmailContacts
   module VERSION #:nodoc:
     MAJOR = 0
     MINOR = 0

@@ -1,6 +1,6 @@
-require 'contacts/version'
+require 'gmail_contacts/version'
 
-module Contacts
+module GmailContacts
 
   Identifier = 'GmailContacts v' + VERSION::STRING
 
@@ -20,7 +20,7 @@ module Contacts
     end
 
     def inspect
-      %!#<Contacts::Contact "#{name}"#{email ? " (#{email})" : ''}>!
+      %!#<GmailContacts::Contact "#{name}"#{email ? " (#{email})" : ''}>!
     end
   end
 

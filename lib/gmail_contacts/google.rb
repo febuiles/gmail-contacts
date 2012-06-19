@@ -1,4 +1,4 @@
-require 'contacts'
+require 'gmail_contacts'
 
 require 'rubygems'
 require 'hpricot'
@@ -9,18 +9,18 @@ require 'stringio'
 require 'net/http'
 require 'net/https'
 
-module Contacts
+module GmailContacts
   # == Fetching Google Contacts
   #
   # First, get the user to follow the following URL:
   #
-  #   Contacts::Google.authentication_url('http://mysite.com/invite')
+  #   GmailContacts::Google.authentication_url('http://mysite.com/invite')
   #
   # After he authenticates successfully to Google, it will redirect him back to the target URL
   # (specified as argument above) and provide the token GET parameter. Use it to create a
   # new instance of this class and request the contact list:
   #
-  #   gmail = Contacts::Google.new(params[:token])
+  #   gmail = GmailContacts::Google.new(params[:token])
   #   gmail.contacts
   #   # => [#<Contact 1>, #<Contact 2>, ...]
   #
@@ -30,12 +30,12 @@ module Contacts
   # for <b>only one request</b>. However, you can specify that you want a session token which
   # doesn't expire:
   #
-  #   Contacts::Google.authentication_url('http://mysite.com/invite', :session => true)
+  #   GmailContacts::Google.authentication_url('http://mysite.com/invite', :session => true)
   #
   # When the user authenticates, he will be redirected back with a token that can be exchanged
   # for a session token with the following method:
   #
-  #   token = Contacts::Google.sesion_token(params[:token])
+  #   token = GmailContacts::Google.sesion_token(params[:token])
   #
   # Now you have a permanent token. Store it with other user data so you can query the API
   # on his behalf without him having to authenticate on Google each time.
@@ -99,7 +99,7 @@ module Contacts
     def self.client_login(email, password)
       response = http_start do |google|
         query = query_string(client_login_options.merge(:Email => email, :Passwd => password))
-        puts "posting #{query} to #{ClientLogin}" if Contacts::verbose?
+        puts "posting #{query} to #{ClientLogin}" if GmailContacts::verbose?
         google.post(ClientLogin, query)
       end
 
@@ -273,7 +273,7 @@ module Contacts
           response = yield(http)
 
           loop do
-            inspect_response(response) if Contacts::verbose?
+            inspect_response(response) if GmailContacts::verbose?
 
             case response
             when Net::HTTPSuccess
