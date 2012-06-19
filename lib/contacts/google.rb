@@ -11,9 +11,9 @@ require 'net/https'
 
 module Contacts
   # == Fetching Google Contacts
-  # 
+  #
   # First, get the user to follow the following URL:
-  # 
+  #
   #   Contacts::Google.authentication_url('http://mysite.com/invite')
   #
   # After he authenticates successfully to Google, it will redirect him back to the target URL
@@ -29,7 +29,7 @@ module Contacts
   # The basic token that you will get after the user has authenticated on Google is valid
   # for <b>only one request</b>. However, you can specify that you want a session token which
   # doesn't expire:
-  # 
+  #
   #   Contacts::Google.authentication_url('http://mysite.com/invite', :session => true)
   #
   # When the user authenticates, he will be redirected back with a token that can be exchanged
@@ -44,7 +44,7 @@ module Contacts
     AuthSubPath = '/accounts/AuthSub' # all variants go over HTTPS
     ClientLogin = '/accounts/ClientLogin'
     FeedsPath   = '/m8/feeds/contacts/'
-    
+
     # default options for #authentication_url
     def self.authentication_url_options
       @authentication_url_options ||= {
@@ -53,7 +53,7 @@ module Contacts
         :session => false
       }
     end
-    
+
     # default options for #client_login
     def self.client_login_options
       @client_login_options ||= {
@@ -94,7 +94,7 @@ module Contacts
       pair = response.body.split(/\n/).detect { |p| p.index('Token=') == 0 }
       pair.split('=').last if pair
     end
-    
+
     # Alternative to AuthSub: using email and password.
     def self.client_login(email, password)
       response = http_start do |google|
@@ -106,7 +106,7 @@ module Contacts
       pair = response.body.split(/\n/).detect { |p| p.index('Auth=') == 0 }
       pair.split('=').last if pair
     end
-    
+
     attr_reader :user, :token, :headers
     attr_accessor :projection
 
@@ -156,27 +156,27 @@ module Contacts
       response = get(params)
       parse_contacts response_body(response)
     end
-    
+
     # Fetches contacts using multiple API calls when necessary
     def all_contacts(options = {}, chunk_size = 200)
       in_chunks(options, :contacts, chunk_size)
     end
 
     protected
-    
+
       def in_chunks(options, what, chunk_size)
         returns = []
         offset = 0
-        
+
         begin
           chunk = send(what, options.merge(:offset => offset, :limit => chunk_size))
           returns.push(*chunk)
           offset += chunk_size
-        end while chunk.size == chunk_size 
-        
+        end while chunk.size == chunk_size
+
         returns
       end
-      
+
       def response_body(response)
         unless response['Content-Encoding'] == 'gzip'
           response.body
@@ -185,18 +185,18 @@ module Contacts
           Zlib::GzipReader.new(gzipped).read
         end
       end
-      
+
       def parse_contacts(body)
         doc = Hpricot::XML body
         contacts_found = []
-        
+
         if updated_node = doc.at('/feed/updated')
           @updated_string = updated_node.inner_text
         end
-        
+
         (doc / '/feed/entry').each do |entry|
           email_nodes = entry / 'gd:email[@address]'
-          
+
           unless email_nodes.empty?
             title_node = entry.at('/title')
             name = title_node ? title_node.inner_text : nil
@@ -208,7 +208,7 @@ module Contacts
 
         contacts_found
       end
-      
+
       # Constructs a query string from a Hash object
       def self.query_string(params)
         params.inject([]) do |all, pair|
@@ -247,18 +247,18 @@ module Contacts
                 'updated-min'
               else key
               end
-            
+
             all[key] = value
           end
           all
         end
       end
-      
+
       def self.authorization_header(token, client = false)
         type = client ? 'GoogleLogin auth' : 'AuthSub token'
         { 'Authorization' => %(#{type}="#{token}") }
       end
-      
+
       def self.http_start(ssl = true)
         port = ssl ? Net::HTTP::https_default_port : Net::HTTP::http_default_port
         http = Net::HTTP.new(DOMAIN, port)
@@ -300,7 +300,7 @@ module Contacts
         for name, value in response
           out.puts "#{name}: #{value}"
         end
-        out.puts "----\n#{response_body response}\n----" unless response.body.empty?
+        out.puts "----\n#{ response}\n----" unless response.body.empty?
       end
   end
 end
