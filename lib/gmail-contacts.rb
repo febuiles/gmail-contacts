@@ -2,7 +2,7 @@ require 'gmail-contacts/google'
 
 module GmailContacts
 
-  VERSION = "0.0.5"
+  VERSION = "0.0.6"
 
   Identifier = 'GmailContacts v' + VERSION
 
