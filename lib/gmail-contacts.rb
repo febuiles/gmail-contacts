@@ -1,8 +1,8 @@
-require 'gmail_contacts/google'
+require 'gmail-contacts/google'
 
 module GmailContacts
 
-  VERSION = "0.0.4"
+  VERSION = "0.0.5"
 
   Identifier = 'GmailContacts v' + VERSION
 
