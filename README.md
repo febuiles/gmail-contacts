@@ -10,6 +10,10 @@ Installation
 
     gem install gmail-contacts
 
+or in your Gemfile:
+
+    gem 'gmail-contacts', :require => "gmail-contacts"
+
 Usage
 -----
 Get a link to the authorization URL:
