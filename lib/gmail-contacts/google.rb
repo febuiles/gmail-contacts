@@ -1,4 +1,4 @@
-require 'gmail_contacts'
+require 'gmail-contacts'
 
 require 'rubygems'
 require 'hpricot'
